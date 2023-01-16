@@ -1,0 +1,9 @@
+server:
+  port: 3131
+
+spring:
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name:
