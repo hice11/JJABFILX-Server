@@ -1,1 +1,1 @@
-rootProject.name = "jjapfilx"
+rootProject.name = "jjabflix"
