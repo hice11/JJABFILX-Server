@@ -17,7 +17,7 @@ public class ProfileController {
 
     }
 
-    @GetMapping
+    @GetMapping("/{userId}")
     public void getProfileList() {
 
     }

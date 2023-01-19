@@ -11,6 +11,11 @@ public class WishController {
 
     }
 
+    @GetMapping("/{profileId}")
+    public void findWishList() {
+
+    }
+
     @DeleteMapping("/{wishId}")
     public void cancelWish(@PathVariable long wishId) {
 

@@ -9,35 +9,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1")
 public class UserController {
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public void login() {
 
     }
 
-    @PostMapping
-    public void addUser() {
+    @PostMapping("/auth/signup")
+    public void signup() {
 
     }
 
-    @GetMapping("/{userId}")
+    @PostMapping("/auth/logout")
+    public void logout() {
+
+    }
+
+    @GetMapping("/auth/password")
+    public void findPassword() {
+
+    }
+
+    @GetMapping("/users/{userId}")
     public void getUser(@PathVariable Long userId) {
 
     }
 
-    @PostMapping("/email")
-    public void findUserPassword() {
-
-    }
-
-    @PutMapping("/{userId}")
+    @PutMapping("/users/{userId}")
     public void editUser(@PathVariable Long userId) {
 
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/users/{userId}")
     public void withdrawUser(@PathVariable Long userId) {
 
     }
