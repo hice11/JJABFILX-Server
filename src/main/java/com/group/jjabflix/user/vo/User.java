@@ -20,7 +20,7 @@ public class User {
     private String phoneNumber;
     private String name;
     private String birth;
-    private String membership;
+    private UserMembership membership;
     private UserStatus status;
 
     private String cardNumber;
