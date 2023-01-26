@@ -28,6 +28,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.9")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 tasks.withType<Test> {
