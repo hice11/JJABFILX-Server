@@ -29,4 +29,8 @@ public class User {
     private LocalDateTime paidAt;
     private LocalDateTime createdAt;
     private LocalDateTime withdrawAt;
+
+    private Role role;
+
 }
+
