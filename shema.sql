@@ -82,3 +82,7 @@ ALTER TABLE `jabflix_db`.`wish` ADD CONSTRAINT `FK_content_TO_wish_1` FOREIGN KE
 REFERENCES `content` (
 	`content_id`
 );
+
+ALTER TABLE `jabflix_db`.`user` ADD CONSTRAINT `UK_user_email` unique (
+	`email`
+);
