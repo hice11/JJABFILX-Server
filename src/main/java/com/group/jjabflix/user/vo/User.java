@@ -13,8 +13,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     private Long userId;
@@ -36,9 +36,8 @@ public class User {
     private Role role;
     private List<String> roles = new ArrayList<>();
 
-    public List<String> getRoles() {
+    public void setRoles() {
         roles.add(role.name());
-        return roles;
     }
 
 }

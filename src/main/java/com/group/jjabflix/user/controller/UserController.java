@@ -21,7 +21,7 @@ public class UserController {
         //return userService.getUserByEmail(userLoginRequest.getEmail());
     }
 
-    @PostMapping("/test")
+    @PostMapping("/test") // JWT 테스트
     public String test() {
         return "success";
     }

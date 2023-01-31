@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throws UsernameNotFoundException {
         User user = userMapper.findByUserEmail(email);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(user.getRoles());
+        user.setRoles();
         return new CustomUserDetails(user);
     }
 }

@@ -40,7 +40,7 @@ public class JwtProvider {
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
     public TokenInfo generateToken (Authentication authentication) {
-        // 권한 가져오기
+        // 권한 가져오기 (ROLE)
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -50,17 +50,17 @@ public class JwtProvider {
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(accessTokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS256)
+                .setSubject(authentication.getName()) // payload.sub: 토큰의 주인을 판별하는 식별자
+                .claim(AUTHORITIES_KEY, authorities) // auth: 직접 작성한 claim. 여기서는 ROLE 정보
+                .setExpiration(accessTokenExpiresIn) // payload.exp: 토큰이 만료되는 시간
+                .signWith(key, SignatureAlgorithm.HS256) // header.alg
                 .compact();
 
         // Refresh Token 생성
         Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
         String refreshToken = Jwts.builder()
-                .setExpiration(refreshTokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS256)
+                .setExpiration(refreshTokenExpiresIn) // payload.exp: 토큰이 만료되는 시간
+                .signWith(key, SignatureAlgorithm.HS256) // header.alg
                 .compact();
 
         return TokenInfo.builder()
