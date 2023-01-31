@@ -26,7 +26,7 @@ public class JwtProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24L; // 1시간 //test용 하루
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60L; // 1시간
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7L; // 7일
 
     private final Key key;
@@ -53,14 +53,14 @@ public class JwtProvider {
                 .setSubject(authentication.getName()) // payload.sub: 토큰의 주인을 판별하는 식별자
                 .claim(AUTHORITIES_KEY, authorities) // auth: 직접 작성한 claim. 여기서는 ROLE 정보
                 .setExpiration(accessTokenExpiresIn) // payload.exp: 토큰이 만료되는 시간
-                .signWith(key, SignatureAlgorithm.HS256) // header.alg
+                .signWith(key, SignatureAlgorithm.HS256) // header.alg: 서명 시 사용하는 알고리즘
                 .compact();
 
         // Refresh Token 생성
         Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
         String refreshToken = Jwts.builder()
                 .setExpiration(refreshTokenExpiresIn) // payload.exp: 토큰이 만료되는 시간
-                .signWith(key, SignatureAlgorithm.HS256) // header.alg
+                .signWith(key, SignatureAlgorithm.HS256) // header.alg: 서명 시 사용하는 알고리즘
                 .compact();
 
         return TokenInfo.builder()

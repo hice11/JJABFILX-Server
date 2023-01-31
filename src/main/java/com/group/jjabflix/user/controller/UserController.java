@@ -3,7 +3,6 @@ package com.group.jjabflix.user.controller;
 import com.group.jjabflix.config.security.jwt.TokenInfo;
 import com.group.jjabflix.user.dto.UserLoginRequest;
 import com.group.jjabflix.user.service.UserService;
-import com.group.jjabflix.user.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
