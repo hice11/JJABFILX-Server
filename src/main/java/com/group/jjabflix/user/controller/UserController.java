@@ -1,14 +1,11 @@
 package com.group.jjabflix.user.controller;
 
+import com.group.jjabflix.config.security.jwt.TokenInfo;
+import com.group.jjabflix.user.dto.UserLoginRequest;
 import com.group.jjabflix.user.service.UserService;
+import com.group.jjabflix.user.vo.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1")
@@ -17,9 +14,16 @@ public class UserController {
 
     private final UserService userService;
 
-    //@PostMapping("/auth/login")
-    public void login() {
+    @PostMapping("/auth/login")
+    public TokenInfo login(@RequestBody UserLoginRequest userLoginRequest) {
+        TokenInfo tokenInfo = userService.login(userLoginRequest);
+        return tokenInfo;
+        //return userService.getUserByEmail(userLoginRequest.getEmail());
+    }
 
+    @PostMapping("/test")
+    public String test() {
+        return "success";
     }
 
     @PostMapping("/auth/signup")
