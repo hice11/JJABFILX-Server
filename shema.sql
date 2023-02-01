@@ -86,3 +86,5 @@ REFERENCES `content` (
 ALTER TABLE `jabflix_db`.`user` ADD CONSTRAINT `UK_user_email` unique (
 	`email`
 );
+
+ALTER TABLE `jabflix_db`.`user` ADD `role` VARCHAR(50);
