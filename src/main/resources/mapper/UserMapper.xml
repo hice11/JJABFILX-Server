@@ -3,4 +3,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.group.jjabflix.user.dao.UserMapper">
 
+    <select id="findByUserEmail" resultType="UserDto" parameterType="String">
+        <![CDATA[
+        SELECT * FROM jabflix_db.user WHERE email = ${email}
+        ]]>
+    </select>
+
+    <!-- 1단계 가입 (이메일 + 비밀번호) -->
+    <insert id="createUser1" parameterType="UserSignupRequest">
+        <![CDATA[
+        INSERT INTO jabflix_db.user
+        (email, password, created_at, role)
+        VALUES (${email}, ${password}, NOW(), 'ROLE_TEMPORARY_USER')
+        ]]>
+    </insert>
+    <!-- 2단계 가입 (멤버십) -->
+    <update id="createUser2" parameterType="UserSignup2Request">
+        <![CDATA[
+        UPDATE `jabflix_db`.`user`
+        SET
+            phone_number = ${phoneNumber},
+            name = ${name},
+            birth = ${birth},
+            membership = ${membership},
+            card_number = ${cardNumber},
+            card_expiration_date = ${cardExpirationDate},
+            paid_at = NOW(),
+            role = 'ROLE_USER_PAY'
+        WHERE email = ${email}
+        ]]>
+    </update>
 </mapper>

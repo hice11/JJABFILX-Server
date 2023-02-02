@@ -1,28 +1,44 @@
 package com.group.jjabflix.user.controller;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.group.jjabflix.common.response.ApiResponse;
+import com.group.jjabflix.config.security.jwt.TokenInfo;
+import com.group.jjabflix.user.dto.UserDto;
+import com.group.jjabflix.user.dto.UserLoginRequest;
+import com.group.jjabflix.user.dto.UserSignup2Request;
+import com.group.jjabflix.user.dto.UserSignupRequest;
+import com.group.jjabflix.user.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("api/v1")
+@RequiredArgsConstructor
 public class UserController {
 
-    @PostMapping("/auth/login")
-    public void login() {
+    private final UserService userService;
 
+    @PostMapping("/auth/login")
+    public TokenInfo login(@RequestBody UserLoginRequest userLoginRequest) {
+        TokenInfo tokenInfo = userService.login(userLoginRequest);
+        return tokenInfo;
+        //return userService.getUserByEmail(userLoginRequest.getEmail());
+    }
+
+    @PostMapping("/test") // JWT 테스트
+    public String test() {
+        return "success";
     }
 
     @PostMapping("/auth/signup")
-    public void signup() {
-
+    public ApiResponse<UserDto> signup(@RequestBody UserSignupRequest user) {
+        return userService.userJoin1(user);
+    }
+    @PostMapping("/auth/signup2")
+    public ApiResponse<UserDto> signup2(@RequestBody UserSignup2Request user) {
+        return userService.userJoin2(user);
     }
 
-    @PostMapping("/auth/logout")
+    @PostMapping("/logout")
     public void logout() {
 
     }
