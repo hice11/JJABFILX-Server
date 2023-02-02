@@ -2,9 +2,8 @@ package com.group.jjabflix.user.controller;
 
 import com.group.jjabflix.common.response.ApiResponse;
 import com.group.jjabflix.config.security.jwt.TokenInfo;
-import com.group.jjabflix.user.dto.UserDto;
 import com.group.jjabflix.user.dto.UserLoginRequest;
-import com.group.jjabflix.user.dto.UserSignup2Request;
+import com.group.jjabflix.user.dto.UserJoinMembershipRequest;
 import com.group.jjabflix.user.dto.UserSignupRequest;
 import com.group.jjabflix.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +29,12 @@ public class UserController {
     }
 
     @PostMapping("/auth/signup")
-    public ApiResponse<UserDto> signup(@RequestBody UserSignupRequest user) {
-        return userService.userJoin1(user);
+    public ApiResponse signup(@RequestBody UserSignupRequest user) {
+        return userService.userSignup(user);
     }
-    @PostMapping("/auth/signup2")
-    public ApiResponse<UserDto> signup2(@RequestBody UserSignup2Request user) {
-        return userService.userJoin2(user);
+    @PostMapping("/auth/signup/membership")
+    public ApiResponse signupMembership(@RequestBody UserJoinMembershipRequest user) {
+        return userService.userJoinMembership(user);
     }
 
     @PostMapping("/logout")

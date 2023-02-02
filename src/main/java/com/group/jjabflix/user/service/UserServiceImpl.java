@@ -1,17 +1,19 @@
 package com.group.jjabflix.user.service;
 
 import com.group.jjabflix.common.response.ApiResponse;
+import com.group.jjabflix.common.response.Result;
 import com.group.jjabflix.config.security.jwt.JwtProvider;
 import com.group.jjabflix.config.security.jwt.TokenInfo;
 import com.group.jjabflix.user.dao.UserMapper;
 import com.group.jjabflix.user.dto.UserLoginRequest;
 import com.group.jjabflix.user.dto.UserDto;
-import com.group.jjabflix.user.dto.UserSignup2Request;
+import com.group.jjabflix.user.dto.UserJoinMembershipRequest;
 import com.group.jjabflix.user.dto.UserSignupRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtProvider jwtProvider;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto getUserByEmail(String email) {
@@ -45,14 +48,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ApiResponse<UserDto> userJoin1(UserSignupRequest user) {
-        userMapper.createUser1(user);
-        return ApiResponse.ok(userMapper.findByUserEmail(user.getEmail()));
+    public ApiResponse userSignup(UserSignupRequest user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userMapper.createUser(user);
+        //
+        UserDto userDto = userMapper.findByUserEmail(user.getEmail());
+        Result result = new Result() { private UserDto user = userDto; public UserDto getUser() {return user;} };
+        return ApiResponse.ok(result);
     }
 
     @Override
-    public ApiResponse<UserDto> userJoin2(UserSignup2Request user) {
-        userMapper.createUser2(user);
-        return ApiResponse.ok(userMapper.findByUserEmail(user.getEmail()));
+    public ApiResponse userJoinMembership(UserJoinMembershipRequest user) {
+        userMapper.createUserMembership(user);
+        //
+        UserDto userDto = userMapper.findByUserEmail(user.getEmail());
+        Result result = new Result() { private UserDto user = userDto; public UserDto getUser() {return user;} };
+        return ApiResponse.ok(result);
     }
 }

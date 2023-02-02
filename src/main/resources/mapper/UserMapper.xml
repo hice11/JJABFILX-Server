@@ -5,32 +5,32 @@
 
     <select id="findByUserEmail" resultType="UserDto" parameterType="String">
         <![CDATA[
-        SELECT * FROM jabflix_db.user WHERE email = ${email}
+        SELECT * FROM jabflix_db.user WHERE email = #{email}
         ]]>
     </select>
 
     <!-- 1단계 가입 (이메일 + 비밀번호) -->
-    <insert id="createUser1" parameterType="UserSignupRequest">
+    <insert id="createUser" parameterType="UserSignupRequest">
         <![CDATA[
         INSERT INTO jabflix_db.user
         (email, password, created_at, role)
-        VALUES (${email}, ${password}, NOW(), 'ROLE_TEMPORARY_USER')
+        VALUES (#{email}, #{password}, NOW(), 'ROLE_TEMPORARY_USER')
         ]]>
     </insert>
     <!-- 2단계 가입 (멤버십) -->
-    <update id="createUser2" parameterType="UserSignup2Request">
+    <update id="createUserMembership" parameterType="UserSignup2Request">
         <![CDATA[
         UPDATE `jabflix_db`.`user`
         SET
-            phone_number = ${phoneNumber},
-            name = ${name},
-            birth = ${birth},
-            membership = ${membership},
-            card_number = ${cardNumber},
-            card_expiration_date = ${cardExpirationDate},
+            phone_number = #{phoneNumber},
+            name = #{name},
+            birth = #{birth},
+            membership = #{membership},
+            card_number = #{cardNumber},
+            card_expiration_date = #{cardExpirationDate},
             paid_at = NOW(),
             role = 'ROLE_USER_PAY'
-        WHERE email = ${email}
+        WHERE email = #{email}
         ]]>
     </update>
 </mapper>
