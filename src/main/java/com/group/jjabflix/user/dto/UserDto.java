@@ -1,19 +1,20 @@
-package com.group.jjabflix.user.vo;
+package com.group.jjabflix.user.dto;
+
+import com.group.jjabflix.user.vo.UserMembership;
+import com.group.jjabflix.user.vo.UserRole;
+import com.group.jjabflix.user.vo.UserStatus;
+import lombok.*;
 
 import java.time.LocalDateTime;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserDto {
 
     private Long userId;
     private String email;
@@ -32,6 +33,11 @@ public class User {
     private LocalDateTime withdrawAt;
 
     private UserRole role;
+    private List<String> roles = new ArrayList<>();
+
+    public void setRoles() {
+        roles.add(role.name());
+    }
 
 }
 
