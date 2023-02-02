@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userMapper.createUser(user);
         //
-        UserDto userDto = userMapper.findByUserEmail(user.getEmail());
+        UserDto userDto = getUserByEmail(user.getEmail());
         Result result = new Result() { private UserDto user = userDto; public UserDto getUser() {return user;} };
         return ApiResponse.ok(result);
     }
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     public ApiResponse userJoinMembership(UserJoinMembershipRequest user) {
         userMapper.createUserMembership(user);
         //
-        UserDto userDto = userMapper.findByUserEmail(user.getEmail());
+        UserDto userDto = getUserByEmail(user.getEmail());
         Result result = new Result() { private UserDto user = userDto; public UserDto getUser() {return user;} };
         return ApiResponse.ok(result);
     }
