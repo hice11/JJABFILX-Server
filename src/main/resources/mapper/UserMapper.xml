@@ -18,7 +18,7 @@
         ]]>
     </insert>
     <!-- 2단계 가입 (멤버십) -->
-    <update id="createUserMembership" parameterType="UserSignup2Request">
+    <update id="createUserMembership" parameterType="UserJoinMembershipRequest">
         <![CDATA[
         UPDATE `jabflix_db`.`user`
         SET

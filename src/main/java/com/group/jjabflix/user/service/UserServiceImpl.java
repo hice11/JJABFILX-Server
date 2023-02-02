@@ -3,7 +3,7 @@ package com.group.jjabflix.user.service;
 import com.group.jjabflix.common.response.ApiResponse;
 import com.group.jjabflix.common.response.Result;
 import com.group.jjabflix.config.security.jwt.JwtProvider;
-import com.group.jjabflix.config.security.jwt.TokenInfo;
+import com.group.jjabflix.config.security.jwt.TokenInfoResponse;
 import com.group.jjabflix.user.dao.UserMapper;
 import com.group.jjabflix.user.dto.UserLoginRequest;
 import com.group.jjabflix.user.dto.UserDto;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TokenInfo login(UserLoginRequest userLoginRequest) {
+    public TokenInfoResponse login(UserLoginRequest userLoginRequest) {
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken
@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenInfo tokenInfo = jwtProvider.generateToken(authentication);
+        TokenInfoResponse tokenInfoResponse = jwtProvider.generateToken(authentication);
 
-        return tokenInfo;
+        return tokenInfoResponse;
     }
 
     @Override

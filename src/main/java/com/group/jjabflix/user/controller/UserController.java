@@ -1,7 +1,7 @@
 package com.group.jjabflix.user.controller;
 
 import com.group.jjabflix.common.response.ApiResponse;
-import com.group.jjabflix.config.security.jwt.TokenInfo;
+import com.group.jjabflix.config.security.jwt.TokenInfoResponse;
 import com.group.jjabflix.user.dto.UserLoginRequest;
 import com.group.jjabflix.user.dto.UserJoinMembershipRequest;
 import com.group.jjabflix.user.dto.UserSignupRequest;
@@ -17,9 +17,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/auth/login")
-    public TokenInfo login(@RequestBody UserLoginRequest userLoginRequest) {
-        TokenInfo tokenInfo = userService.login(userLoginRequest);
-        return tokenInfo;
+    public TokenInfoResponse login(@RequestBody UserLoginRequest userLoginRequest) {
+        TokenInfoResponse tokenInfoResponse = userService.login(userLoginRequest);
+        return tokenInfoResponse;
         //return userService.getUserByEmail(userLoginRequest.getEmail());
     }
 
