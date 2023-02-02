@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TokenInfoResponse login(UserLoginRequest userLoginRequest) {
+    public ApiResponse login(UserLoginRequest userLoginRequest) {
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken
@@ -43,8 +43,10 @@ public class UserServiceImpl implements UserService {
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfoResponse tokenInfoResponse = jwtProvider.generateToken(authentication);
-
-        return tokenInfoResponse;
+        //
+        Result result = new Result() { private TokenInfoResponse tokenInfo = tokenInfoResponse;
+            public TokenInfoResponse getTokenInfo() {return tokenInfo;} };
+        return ApiResponse.ok(result);
     }
 
     @Override

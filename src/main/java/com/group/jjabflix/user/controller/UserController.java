@@ -17,10 +17,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/auth/login")
-    public TokenInfoResponse login(@RequestBody UserLoginRequest userLoginRequest) {
-        TokenInfoResponse tokenInfoResponse = userService.login(userLoginRequest);
-        return tokenInfoResponse;
-        //return userService.getUserByEmail(userLoginRequest.getEmail());
+    public ApiResponse login(@RequestBody UserLoginRequest userLoginRequest) {
+        return userService.login(userLoginRequest);
     }
 
     @PostMapping("/test") // JWT 테스트

@@ -11,7 +11,7 @@ public interface UserService {
 
     UserDto getUserByEmail(String email);
 
-    TokenInfoResponse login(UserLoginRequest userLoginRequest);
+    ApiResponse login(UserLoginRequest userLoginRequest);
 
     ApiResponse userSignup(UserSignupRequest user);
     ApiResponse userJoinMembership(UserJoinMembershipRequest user);
