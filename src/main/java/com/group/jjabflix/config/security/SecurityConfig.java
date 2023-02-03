@@ -33,8 +33,9 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests() // 조건별로 요청 허용/제한 설정
                 //.antMatchers("/api/v1/auth/signup", "/api/v1/logout").hasRole("TEMPORARY_USER")
+                .antMatchers("/api/v1/test").hasRole("TEMPORARY_USER") // 권한이 있는 유저에게만 허용
+                .antMatchers("/api/v1/users/**").hasAnyRole("USER_FREE", "USER_PAY")
                 .antMatchers("/api/v1/auth/**").permitAll() // 로그인, 회원가입, pw 찾기는 모두 허용
-                .antMatchers("/api/v1/test").hasRole("TEMPORARY_USER") // USER 권한이 있는 유저에게만 허용
                 //.anyRequest().authenticated() // 이 밖에 모든 요청에 대해서 인증이 필요
                 .anyRequest().permitAll() // test // 해당 API에 대해서는 모든 요청을 허가
                 .and()
