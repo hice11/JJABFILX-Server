@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
 
     UserDto findByUserEmail(String email);
+    UserDto findByUserId(String userId);
 
     void createUser(UserSignupRequest user);
     void createUserMembership(UserJoinMembershipRequest user);

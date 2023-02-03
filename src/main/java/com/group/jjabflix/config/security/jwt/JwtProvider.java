@@ -49,7 +49,7 @@ public class JwtProvider {
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
-                .setSubject(authentication.getName()) // payload.sub: 토큰의 주인을 판별하는 식별자. 여기서는 email
+                .setSubject(authentication.getName()) // payload.sub: 토큰의 주인을 판별하는 식별자. 여기서는 user_id
                 .claim(AUTHORITIES_KEY, authorities) // auth: 직접 작성한 claim. 여기서는 ROLE 정보
                 .setExpiration(accessTokenExpiresIn) // payload.exp: 토큰이 만료되는 시간
                 .signWith(key, SignatureAlgorithm.HS256) // header.alg: 서명 시 사용하는 알고리즘

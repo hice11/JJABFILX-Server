@@ -10,6 +10,7 @@ import com.group.jjabflix.user.dto.UserSignupRequest;
 public interface UserService {
 
     UserDto getUserByEmail(String email);
+    UserDto getUserByUserId(String userId);
 
     ApiResponse login(UserLoginRequest userLoginRequest);
 
