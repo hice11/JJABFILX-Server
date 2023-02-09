@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
@@ -20,7 +21,7 @@ public class User {
     private String phoneNumber;
     private String name;
     private String birth;
-    private String membership;
+    private Membership membership;
     private UserStatus status;
 
     private String cardNumber;
@@ -29,4 +30,19 @@ public class User {
     private LocalDateTime paidAt;
     private LocalDateTime createdAt;
     private LocalDateTime withdrawAt;
+
+    private Role role;
+
+    public User(String email, String password, String phoneNumber, String name, String birth, Role role) {
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.name = name;
+        this.birth = birth;
+        this.role = role;
+    }
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
+    }
 }

@@ -28,6 +28,12 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.9")
+
+	implementation ("org.springframework.boot:spring-boot-starter-security")
+	implementation ("org.springframework.security:spring-security-test")
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 }
 
 tasks.withType<Test> {
