@@ -8,4 +8,23 @@
     VALUES
       (#{email}, #{password}, #{phoneNumber}, #{name}, #{birth}, now(), #{role});
   </insert>
+
+  <select id="selectUserByEmail" parameterType="String" resultType="User">
+    select `user`.`user_id`,
+           `user`.`email`,
+           `user`.`password`,
+           `user`.`phone_number`,
+           `user`.`name`,
+           `user`.`birth`,
+           `user`.`membership`,
+           `user`.`status`,
+           `user`.`card_number`,
+           `user`.`card_expiration_date`,
+           `user`.`paid_at`,
+           `user`.`created_at`,
+           `user`.`withdraw_at`,
+           `user`.`role`
+    from `jabflix_db`.`user`
+    where `user`.`email` = #{email};
+  </select>
 </mapper>

@@ -28,12 +28,10 @@ public class JwtProvider {
     private static final String BEARER_TYPE = "Bearer";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24L; // 24시간
 
-    @Value("${jwt.secret.key}")
-    private String secretKey;
     private final Key key;
     private final Logger LOGGER = LoggerFactory.getLogger(JwtProvider.class);
 
-    public JwtProvider() {
+    public JwtProvider(@Value("${jwt.secret.key}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }

@@ -33,7 +33,7 @@ public class SecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/swagger-ui/**").permitAll()
+            .antMatchers("/api-docs/**","/swagger-ui/**").permitAll()
             .antMatchers("/api/v1/auth/**").permitAll()
             .antMatchers("/api/v1/users/**").hasRole("USER")
             .anyRequest().authenticated()
