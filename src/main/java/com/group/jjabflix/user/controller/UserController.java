@@ -23,7 +23,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/auth/login")
-    public ResponseEntity<TokenInfoResponse> login(@RequestBody UserLoginRequestDto requestDto) {
+    public ResponseEntity<TokenInfoResponse> login(@RequestBody UserLoginRequestDto requestDto)
+        throws Exception {
         return userService.login(requestDto);
     }
 

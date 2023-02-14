@@ -2,9 +2,12 @@ package com.group.jjabflix.user.service;
 
 import com.group.jjabflix.config.security.jwt.JwtProvider;
 import com.group.jjabflix.config.security.jwt.TokenInfoResponse;
+import com.group.jjabflix.error.ErrorCode;
 import com.group.jjabflix.user.dao.UserMapper;
 import com.group.jjabflix.user.dto.UserLoginRequestDto;
 import com.group.jjabflix.user.dto.UserSignupRequestDto;
+import com.group.jjabflix.user.exception.EmailDuplicationException;
+import com.group.jjabflix.user.exception.NotFoundUserException;
 import com.group.jjabflix.user.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signup(UserSignupRequestDto requestDto) throws Exception {
         if (userMapper.selectUserByEmail(requestDto.getEmail()) != null) {
-            throw new Exception("이미 존재하는 이메일입니다");
+            throw new EmailDuplicationException(ErrorCode.EMAIL_DUPLICATION);
         }
 
         User user = requestDto.toUser();
@@ -38,8 +41,14 @@ public class UserServiceImpl implements UserService {
         userMapper.insertUser(user);
     }
 
+    @Transactional
     @Override
-    public ResponseEntity<TokenInfoResponse> login(UserLoginRequestDto requestDto) {
+    public ResponseEntity<TokenInfoResponse> login(UserLoginRequestDto requestDto)
+        throws Exception {
+        if (userMapper.selectUserByEmail(requestDto.getEmail()) == null) {
+            throw new NotFoundUserException(ErrorCode.NOT_FOUND_USER);
+        }
+
         UsernamePasswordAuthenticationToken authenticationToken
             = new UsernamePasswordAuthenticationToken(requestDto.getEmail(),
             requestDto.getPassword());

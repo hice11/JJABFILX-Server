@@ -9,6 +9,6 @@ public interface UserService {
 
     void signup(UserSignupRequestDto requestDto) throws Exception;
 
-    ResponseEntity<TokenInfoResponse> login(UserLoginRequestDto requestDto);
+    ResponseEntity<TokenInfoResponse> login(UserLoginRequestDto requestDto) throws Exception;
 
 }
