@@ -4,7 +4,7 @@ import com.group.jjabflix.config.security.jwt.TokenInfoResponse;
 import com.group.jjabflix.user.dto.UserLoginRequestDto;
 import com.group.jjabflix.user.dto.UserSignupRequestDto;
 import com.group.jjabflix.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping("/auth/login")
     public ResponseEntity<TokenInfoResponse> login(@RequestBody UserLoginRequestDto requestDto)

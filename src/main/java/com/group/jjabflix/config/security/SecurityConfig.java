@@ -1,5 +1,8 @@
 package com.group.jjabflix.config.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.group.jjabflix.config.security.error.CustomAccessDeniedHandler;
+import com.group.jjabflix.config.security.error.CustomAuthenticationEntryPoint;
 import com.group.jjabflix.config.security.jwt.JwtAuthenticationFilter;
 import com.group.jjabflix.config.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
+    private final ObjectMapper objectMapper;
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -37,6 +41,10 @@ public class SecurityConfig {
             .antMatchers("/api/v1/auth/**").permitAll()
             .antMatchers("/api/v1/users/**").hasRole("USER")
             .anyRequest().authenticated()
+            .and()
+            .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint(objectMapper))
+                .accessDeniedHandler(new CustomAccessDeniedHandler(objectMapper))
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
                 UsernamePasswordAuthenticationFilter.class);

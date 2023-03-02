@@ -1,11 +1,11 @@
 package com.group.jjabflix.config.security.jwt;
 
+import com.group.jjabflix.error.ErrorCode;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,6 +23,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class JwtProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
@@ -29,7 +31,6 @@ public class JwtProvider {
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24L; // 24시간
 
     private final Key key;
-    private final Logger LOGGER = LoggerFactory.getLogger(JwtProvider.class);
 
     public JwtProvider(@Value("${jwt.secret.key}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -74,18 +75,25 @@ public class JwtProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token, HttpServletRequest request) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            LOGGER.info("잘못된 JWT 서명입니다.");
+            log.info("잘못된 토큰 입니다.");
+            request.setAttribute("exception", ErrorCode.INVALID_TOKEN);
         } catch (ExpiredJwtException e) {
-            LOGGER.info("만료된 토큰입니다.");
+            log.info("만료된 토큰 입니다.");
+            request.setAttribute("exception", ErrorCode.EXPIRED_TOKEN);
         } catch (UnsupportedJwtException e) {
-            LOGGER.info("지원되지 않는 토큰입니다.");
+            log.info("지원되지 않는 토큰 입니다.");
+            request.setAttribute("exception", ErrorCode.INVALID_TOKEN);
         } catch (IllegalArgumentException e) {
-            LOGGER.info("JWT claims string is empty.");
+            log.info("JWT claims string is empty.");
+            request.setAttribute("exception", ErrorCode.INVALID_TOKEN);
+        } catch (Exception e) {
+            log.info("JWT 예외 발생.");
+            request.setAttribute("exception", ErrorCode.INVALID_TOKEN);
         }
         return false;
     }
