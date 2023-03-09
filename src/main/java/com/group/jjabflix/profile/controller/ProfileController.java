@@ -1,20 +1,22 @@
 package com.group.jjabflix.profile.controller;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.group.jjabflix.profile.dto.ProfileRequestDto;
+import com.group.jjabflix.profile.service.ProfileService;
+import com.group.jjabflix.profile.vo.Profile;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/profiles")
 public class ProfileController {
 
-    @PostMapping
-    public void addProfile() {
+    private final ProfileService profileService;
 
+    @PostMapping
+    public ResponseEntity<Profile> addProfile(@RequestBody ProfileRequestDto profile) {
+        return profileService.createProfile(profile);
     }
 
     @GetMapping("/{userId}")

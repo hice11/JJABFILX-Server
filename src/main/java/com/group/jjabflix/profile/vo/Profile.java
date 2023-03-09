@@ -17,5 +17,5 @@ public class Profile {
     private Long profileId;
     private Long userId;
     private String name;
-    private Text icon;
+    private String icon;
 }

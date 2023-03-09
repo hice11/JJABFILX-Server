@@ -26,8 +26,10 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.0")
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.9")
+	implementation("com.google.code.gson:gson:2.10.1")
 
 	implementation ("org.springframework.boot:spring-boot-starter-security")
 	implementation ("org.springframework.security:spring-security-test")

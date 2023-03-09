@@ -3,4 +3,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.group.jjabflix.profile.dao.ProfileMapper">
 
+    <insert id="insertProfile" parameterType="ProfileRequestDto">
+        INSERT INTO `jabflix_db`.`profile` (`user_id`,`name`,`icon`)
+        VALUES (#{userId},#{name},#{icon})
+    </insert>
+
+    <select id="selectProfile" parameterType="long" resultType="Profile">
+        SELECT * FROM `jabflix_db`.`profile`
+        WHERE profile_id = #{profileId}
+    </select>
+
+    <select id="selectProfiles" parameterType="long" resultType="Profile">
+        SELECT * FROM `jabflix_db`.`profile`
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="isProfileNameExist" parameterType="ProfileRequestDto" resultType="_int">
+        SELECT COUNT(`name`) FROM `jabflix_db`.`profile`
+        WHERE user_id = #{userId} AND `name` = #{name}
+    </select>
+    <select id="getProfileId" parameterType="ProfileRequestDto" resultType="long">
+        SELECT profile_id FROM `jabflix_db`.`profile`
+        WHERE user_id = #{userId} AND `name` = #{name}
+    </select>
+
 </mapper>
