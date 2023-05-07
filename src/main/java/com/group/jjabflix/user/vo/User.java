@@ -1,11 +1,8 @@
 package com.group.jjabflix.user.vo;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
@@ -13,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User {
 
     private Long userId;

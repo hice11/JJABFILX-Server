@@ -65,7 +65,7 @@ class ProfileServiceImplTest {
     }
 
     @Test
-    @DisplayName(value = "프로필 이름 즁복 예외 테스트 - service")
+    @DisplayName(value = "프로필 이름 중복 예외 테스트 - service")
     void existProfileNameException() {
         // given
         when(profileMapper.selectProfiles(profile.getUserId())).thenReturn(profileList(1));

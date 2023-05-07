@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
@@ -31,5 +33,18 @@ public class ProfileServiceImpl implements ProfileService {
         Profile profileResponse = profileMapper.selectProfile(profileMapper.getProfileId(profile));
         return ResponseEntity.status(HttpStatus.CREATED).body(profileResponse);
     }
+
+    @Override
+    public ResponseEntity<Profile> getProfile(Long profileId) {
+        Profile profileResponse = profileMapper.selectProfile(profileId);
+        return ResponseEntity.status(HttpStatus.OK).body(profileResponse);
+    }
+
+    @Override
+    public ResponseEntity<List<Profile>> getProfiles(Long userId) {
+        List<Profile> profilesResponse = profileMapper.selectProfiles(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(profilesResponse);
+    }
+
 
 }

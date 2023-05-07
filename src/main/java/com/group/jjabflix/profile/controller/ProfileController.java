@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/profiles")
@@ -20,13 +22,13 @@ public class ProfileController {
     }
 
     @GetMapping("/{userId}")
-    public void getProfileList() {
-
+    public ResponseEntity<List<Profile>> getProfileList(@PathVariable Long userId) {
+        return profileService.getProfiles(userId);
     }
 
     @GetMapping("/{profileId}")
-    public void getProfile(@PathVariable Long profileId) {
-
+    public ResponseEntity<Profile> getProfile(@PathVariable Long profileId) {
+        return profileService.getProfile(profileId);
     }
 
     @PutMapping("/{profileId}")
